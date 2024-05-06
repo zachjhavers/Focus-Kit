@@ -8,7 +8,7 @@ function App() {
   const [isBreak, setIsBreak] = useState(false);
 
   const playAlertSound = () => {
-    const audio = new Audio("../Assets/Alert Sound.mp3"); // Replace with the path to your alert sound
+    const audio = new Audio("../Assets/Alert Sound.mp3");
     audio.play();
   };
 
