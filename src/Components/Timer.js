@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import pomodoroLogo from "../Assets/PomodoroLogo.png";
+import alert from "../Assets/AlertSound.mp3";
+import alarm from "../Assets/AlarmSound.mp3";
 
-function App() {
+function Timer() {
   const [time, setTime] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const playAlertSound = () => {
-    const audio = new Audio("../Assets/Alert Sound.mp3");
-    audio.play();
+    new Audio(alert).play();
   };
 
-  const showAlert = (message) => {
-    alert(message);
+  const playAlarmSound = () => {
+    new Audio(alarm).play();
   };
 
   const toggleTimer = () => {
     setIsActive(!isActive);
+    playAlertSound();
   };
 
   const resetTimer = () => {
@@ -35,8 +38,8 @@ function App() {
     } else if (time === 0) {
       setIsBreak(!isBreak);
       setTime(isBreak ? 25 * 60 : 5 * 60);
-      playAlertSound();
-      showAlert("Time's up! Take a break.");
+      playAlarmSound();
+      setShowModal(true);
     }
 
     return () => clearInterval(interval);
@@ -82,8 +85,43 @@ function App() {
           </div>
         </div>
       </div>
+      <div
+        className={`modal fade ${showModal ? "show" : ""}`}
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="modalLabel"
+        aria-hidden="true"
+        style={{ display: showModal ? "block" : "none" }}
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="modalLabel">
+                GOOD JOB
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick={() => setShowModal(false)}
+              ></button>
+            </div>
+            <div className="modal-body">ITS TIME FOR A BREAK</div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setShowModal(false)}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default Timer;
