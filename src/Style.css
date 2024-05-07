@@ -26,3 +26,26 @@ body {
 .btn {
   margin-top: 10px;
 }
+
+.nav-item:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+}
+
+.logo {
+  width: 200px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.navbar {
+  border-radius: 20px;
+}
+
+.nav-link {
+  margin-right: 50px;
+}
+
+.logo-hovered {
+  transform: scale(1.2);
+}
