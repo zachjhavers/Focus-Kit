@@ -101,14 +101,16 @@ function Timer() {
                 <label htmlFor="checkInTimeInput" className="form-label">
                   Set Check-In Time (minutes):
                 </label>
-                <input
-                  type="number"
+                <select
                   id="checkInTimeInput"
-                  className="form-control"
-                  min="1"
+                  className="form-select"
                   value={checkInTime / 60}
                   onChange={handleCheckInInputChange}
-                />
+                >
+                  <option value="1">1 minute</option>
+                  <option value="5">5 minutes</option>
+                  <option value="10">10 minutes</option>
+                </select>
               </div>
             </div>
           </div>

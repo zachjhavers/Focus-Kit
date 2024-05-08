@@ -82,6 +82,7 @@ const BreathingExercise = () => {
   const stopTimer = () => {
     setIsRunning(false);
     clearInterval(interval.current);
+    setCurrentCycle(1);
     setTimer(4);
   };
 
@@ -119,7 +120,7 @@ const BreathingExercise = () => {
               </div>
               <div className="d-grid gap-2">
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-success"
                   onClick={startTimer}
                   disabled={isRunning}
                 >
