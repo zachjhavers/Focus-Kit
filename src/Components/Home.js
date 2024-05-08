@@ -14,7 +14,7 @@ const Home = () => {
             src={Logo}
             alt="Workflow App Logo"
             className="img-fluid mb-4"
-            style={{ width: "100px", height: "100px" }}
+            style={{ width: "100px", height: "80px" }}
           />
           <h1 className="mb-4">Welcome To Work Flow Companion</h1>
           <p className="lead">

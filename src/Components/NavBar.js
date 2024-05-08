@@ -12,8 +12,8 @@ const Navigation = () => {
         <Navbar.Brand href="/">
           <img
             src={Logo}
-            width="60"
-            height="60"
+            width="60px"
+            height="60px"
             className="d-inline-block align-top img-fluid"
             alt="React Bootstrap logo"
           />
