@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Carousel from "react-bootstrap/Carousel";
 import inhaleAudio from "../Assets/Breathe In.mp3";
 import holdAudio from "../Assets/Hold.mp3";
 import exhaleAudio from "../Assets/Breathe Out.mp3";
@@ -8,7 +9,6 @@ const BreathingExercise = () => {
   const [phase, setPhase] = useState("inhale");
   const [timer, setTimer] = useState(4);
   const [isRunning, setIsRunning] = useState(false);
-  const [audio] = useState(null);
   const interval = useRef(null);
   const [currentCycle, setCurrentCycle] = useState(1);
   const [totalCycles, setTotalCycles] = useState(0);
@@ -28,6 +28,14 @@ const BreathingExercise = () => {
       startExercise();
     }
   }, [isRunning, phase]);
+
+  useEffect(() => {
+    if (currentCycle === totalCycles + 1) {
+      setIsRunning(false);
+      setCurrentCycle(1);
+      stopTimer();
+    }
+  }, [currentCycle, totalCycles]);
 
   const switchPhase = () => {
     if (phase === "inhale") {
@@ -88,6 +96,12 @@ const BreathingExercise = () => {
           <div className="card text-center mt-5">
             <div className="card-header">Box Breathing Exercise</div>
             <div className="card-body">
+              <div className="mt-3">
+                <h1>{timer}</h1>
+                <p>
+                  Cycle: {currentCycle}/{totalCycles}
+                </p>
+              </div>
               <div className="mb-3">
                 <select
                   className="form-select"
@@ -117,12 +131,6 @@ const BreathingExercise = () => {
                 >
                   <i className="fas fa-pause"></i> Stop
                 </button>
-              </div>
-              <div className="mt-3">
-                <h1>{timer}</h1>
-                <p>
-                  Cycle: {currentCycle}/{totalCycles}
-                </p>
               </div>
             </div>
           </div>

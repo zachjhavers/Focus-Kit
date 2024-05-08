@@ -9,6 +9,8 @@ function Timer() {
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [checkInTime, setCheckInTime] = useState(5 * 60);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   const playAlertSound = () => {
     new Audio(alert).play();
@@ -27,6 +29,7 @@ function Timer() {
     setIsActive(false);
     setTime(25 * 60);
     setIsBreak(false);
+    setElapsedTime(0);
   };
 
   useEffect(() => {
@@ -34,6 +37,13 @@ function Timer() {
     if (isActive && time > 0) {
       interval = setInterval(() => {
         setTime((time) => time - 1);
+        setElapsedTime((elapsedTime) => elapsedTime + 1);
+        if (elapsedTime >= checkInTime) {
+          setShowModal(true);
+          setIsActive(!isActive);
+          playAlarmSound();
+          setElapsedTime(0);
+        }
       }, 1000);
     } else if (time === 0) {
       setIsBreak(!isBreak);
@@ -43,7 +53,13 @@ function Timer() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, time, isBreak]);
+  }, [isActive, time, isBreak, checkInTime, elapsedTime]);
+
+  const handleCheckInInputChange = (event) => {
+    const inputValue = event.target.value;
+    setCheckInTime(inputValue * 60);
+    setElapsedTime(0);
+  };
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -62,7 +78,7 @@ function Timer() {
             <div className="card-header">{isBreak ? "BREAK" : "WORK"}</div>
             <div className="card-body">
               <h1 className="display-4">{formatTime(time)}</h1>
-              <div class="d-grid gap-2">
+              <div className="d-grid gap-2">
                 <button
                   className={`btn btn-${isActive ? "danger" : "success"} mr-2`}
                   onClick={toggleTimer}
@@ -78,8 +94,21 @@ function Timer() {
                   )}
                 </button>
                 <button className="btn btn-secondary" onClick={resetTimer}>
-                  <i class="fa-solid fa-rotate-left"></i> Reset
+                  <i className="fa-solid fa-rotate-left"></i> Reset
                 </button>
+              </div>
+              <div className="mt-3">
+                <label htmlFor="checkInTimeInput" className="form-label">
+                  Set Check-In Time (minutes):
+                </label>
+                <input
+                  type="number"
+                  id="checkInTimeInput"
+                  className="form-control"
+                  min="1"
+                  value={checkInTime / 60}
+                  onChange={handleCheckInInputChange}
+                />
               </div>
             </div>
           </div>
@@ -97,7 +126,7 @@ function Timer() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="modalLabel">
-                GOOD JOB
+                {isBreak ? "BREAK" : "CHECK-IN"}
               </h5>
               <button
                 type="button"
@@ -107,14 +136,16 @@ function Timer() {
                 onClick={() => setShowModal(false)}
               ></button>
             </div>
-            <div className="modal-body">ITS TIME FOR A BREAK</div>
+            <div className="modal-body">
+              {isBreak ? "It's time for a break!" : "How are you doing?"}
+            </div>
             <div className="modal-footer">
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={() => setShowModal(false)}
               >
-                OK
+                Continue
               </button>
             </div>
           </div>
