@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Logo from "../Assets/Workflow App Logo.png";
+import Graphic from "../Assets/BreathingExerciseGraphic.png";
 
 const Navigation = () => {
   return (
@@ -11,11 +11,11 @@ const Navigation = () => {
       <Container>
         <Navbar.Brand href="/">
           <img
-            src={Logo}
+            src={Graphic}
             width="60px"
             height="60px"
             className="d-inline-block align-top img-fluid"
-            alt="React Bootstrap logo"
+            alt="App Logo"
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import pomodoroLogo from "../Assets/PomodoroLogo.png";
+import Graphic from "../Assets/PomodoroTimerGraphic.png";
 import alert from "../Assets/AlertSound.mp3";
 import alarm from "../Assets/AlarmSound.mp3";
 
@@ -73,7 +73,7 @@ function Timer() {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <img src={pomodoroLogo} alt="Timer" className="img-fluid mb-3" />
+          <img src={Graphic} alt="Graphic" className="img-fluid mb-3" />
           <div className="card text-center mt-5">
             <div className="card-header">{isBreak ? "BREAK" : "WORK"}</div>
             <div className="card-body">

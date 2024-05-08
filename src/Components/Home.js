@@ -3,19 +3,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Logo from "../Assets/Workflow App Logo.png";
+import Graphic from "../Assets/BreathingExerciseGraphic.png";
 
 const Home = () => {
   return (
     <Container className="mt-5">
       <Row className="justify-content-center">
         <Col xs={12} md={6} className="text-center">
-          <img
-            src={Logo}
-            alt="Workflow App Logo"
-            className="img-fluid mb-4"
-            style={{ width: "100px", height: "80px" }}
-          />
+          <img src={Graphic} alt="App Logo" className="img-fluid mb-4" />
           <h1 className="mb-4">Welcome To Work Flow Companion</h1>
           <p className="lead">
             Work Flow Companion is your go-to tool for boosting productivity and

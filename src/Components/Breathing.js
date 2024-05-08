@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import Carousel from "react-bootstrap/Carousel";
 import inhaleAudio from "../Assets/Breathe In.mp3";
 import holdAudio from "../Assets/Hold.mp3";
 import exhaleAudio from "../Assets/Breathe Out.mp3";
+import Graphic from "../Assets/BreathingExerciseGraphic.png";
 
 const BreathingExercise = () => {
   const [duration, setDuration] = useState(60);
@@ -93,6 +93,7 @@ const BreathingExercise = () => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-6">
+          <img src={Graphic} alt="Graphic" className="img-fluid mb-3" />
           <div className="card text-center mt-5">
             <div className="card-header">Box Breathing Exercise</div>
             <div className="card-body">
