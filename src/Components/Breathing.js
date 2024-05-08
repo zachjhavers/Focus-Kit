@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import inhaleAudio from "../Assets/Breathe In.mp3";
 import holdAudio from "../Assets/Hold.mp3";
 import exhaleAudio from "../Assets/Breathe Out.mp3";
+import Alarm from "../Assets/AlarmSound.mp3";
 import Graphic from "../Assets/BreathingExerciseGraphic.png";
 
 const BreathingExercise = () => {
@@ -51,10 +52,17 @@ const BreathingExercise = () => {
       playAudio(holdAudio);
       setTimer(4);
     } else if (phase === "hold2") {
-      setPhase("inhale");
-      playAudio(inhaleAudio);
-      setTimer(4);
-      setCurrentCycle((prevCycle) => prevCycle + 1);
+      if (currentCycle === totalCycles) {
+        setIsRunning(false);
+        setCurrentCycle(1);
+        stopTimer();
+        playAudio(Alarm);
+      } else {
+        setPhase("inhale");
+        playAudio(inhaleAudio);
+        setTimer(4);
+        setCurrentCycle((prevCycle) => prevCycle + 1);
+      }
     }
   };
 
