@@ -1,23 +1,44 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Modal,
+  Form,
+  Card,
+  Image,
+} from "react-bootstrap";
 import Graphic from "../Assets/PomodoroTimerGraphic.png";
-import alert from "../Assets/AlertSound.mp3";
-import alarm from "../Assets/AlarmSound.mp3";
+import alertSound from "../Assets/AlertSound.mp3";
+import alarmSound from "../Assets/AlarmSound.mp3";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlay,
+  faPause,
+  faSync,
+  faCog,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Timer() {
   const [time, setTime] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [settingsModal, setSettingsModal] = useState(false);
+  const [workTime, setWorkTime] = useState(25);
+  const [breakTime, setBreakTime] = useState(5);
   const [checkInTime, setCheckInTime] = useState(5 * 60);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const navigate = useNavigate();
+  const playAlertSound = () => new Audio(alertSound).play();
+  const playAlarmSound = () => new Audio(alarmSound).play();
 
-  const playAlertSound = () => {
-    new Audio(alert).play();
-  };
-
-  const playAlarmSound = () => {
-    new Audio(alarm).play();
+  const navigateToBreathingExercises = () => {
+    navigate("/breathing-exercises");
+    setShowModal(false);
   };
 
   const toggleTimer = () => {
@@ -27,7 +48,7 @@ function Timer() {
 
   const resetTimer = () => {
     setIsActive(false);
-    setTime(25 * 60);
+    setTime(workTime * 60);
     setIsBreak(false);
     setElapsedTime(0);
   };
@@ -40,26 +61,19 @@ function Timer() {
         setElapsedTime((elapsedTime) => elapsedTime + 1);
         if (elapsedTime >= checkInTime) {
           setShowModal(true);
-          setIsActive(!isActive);
+          setIsActive(false);
           playAlarmSound();
           setElapsedTime(0);
         }
       }, 1000);
     } else if (time === 0) {
       setIsBreak(!isBreak);
-      setTime(isBreak ? 25 * 60 : 5 * 60);
+      setTime(isBreak ? breakTime * 60 : workTime * 60);
       playAlarmSound();
       setShowModal(true);
     }
-
     return () => clearInterval(interval);
-  }, [isActive, time, isBreak, checkInTime, elapsedTime]);
-
-  const handleCheckInInputChange = (event) => {
-    const inputValue = event.target.value;
-    setCheckInTime(inputValue * 60);
-    setElapsedTime(0);
-  };
+  }, [isActive, time, isBreak, workTime, breakTime, checkInTime, elapsedTime]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -69,91 +83,109 @@ function Timer() {
       .padStart(2, "0")}`;
   };
 
+  const handleSettingsChange = (event) => {
+    event.preventDefault();
+    const newWorkTime = parseInt(event.target.workTime.value);
+    const newBreakTime = parseInt(event.target.breakTime.value);
+    const newCheckInTime = parseInt(event.target.checkInTime.value);
+    setWorkTime(newWorkTime);
+    setBreakTime(newBreakTime);
+    setCheckInTime(newCheckInTime * 60);
+    if (!isBreak) {
+      setTime(newWorkTime * 60);
+    } else {
+      setTime(newBreakTime * 60);
+    }
+    setSettingsModal(false);
+  };
+
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <img src={Graphic} alt="Graphic" className="img-fluid mb-3" />
-          <div className="card text-center mt-5">
-            <div className="card-header">{isBreak ? "BREAK" : "WORK"}</div>
-            <div className="card-body">
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <Image
+            src={Graphic}
+            alt="Pomodoro Timer"
+            className="img-fluid mb-3"
+          />
+          <Card className="text-center">
+            <Card.Header>{isBreak ? "BREAK" : "WORK"}</Card.Header>
+            <Card.Body>
               <h1 className="display-4">{formatTime(time)}</h1>
-              <div className="d-grid gap-2">
-                <button
-                  className={`btn btn-${isActive ? "danger" : "success"} mr-2`}
-                  onClick={toggleTimer}
-                >
-                  {isActive ? (
-                    <>
-                      <i className="fas fa-pause"></i> Pause
-                    </>
-                  ) : (
-                    <>
-                      <i className="fas fa-play"></i> Start
-                    </>
-                  )}
-                </button>
-                <button className="btn btn-secondary" onClick={resetTimer}>
-                  <i className="fa-solid fa-rotate-left"></i> Reset
-                </button>
-              </div>
-              <div className="mt-3">
-                <label htmlFor="checkInTimeInput" className="form-label">
-                  Set Check-In Time (minutes):
-                </label>
-                <select
-                  id="checkInTimeInput"
-                  className="form-select"
-                  value={checkInTime / 60}
-                  onChange={handleCheckInInputChange}
-                >
-                  <option value="1">1 minute</option>
-                  <option value="5">5 minutes</option>
-                  <option value="10">10 minutes</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className={`modal fade ${showModal ? "show" : ""}`}
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="modalLabel"
-        aria-hidden="true"
-        style={{ display: showModal ? "block" : "none" }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="modalLabel">
-                {isBreak ? "BREAK" : "CHECK-IN"}
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={() => setShowModal(false)}
-              ></button>
-            </div>
-            <div className="modal-body">
-              {isBreak ? "It's time for a break!" : "How are you doing?"}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setShowModal(false)}
+              <Button
+                variant={isActive ? "danger" : "success"}
+                onClick={toggleTimer}
+                className="w-100 mb-2"
               >
-                Continue
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                <FontAwesomeIcon icon={isActive ? faPause : faPlay} />{" "}
+                {isActive ? " Pause" : " Start"}
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={resetTimer}
+                className="w-100 mb-2"
+              >
+                <FontAwesomeIcon icon={faSync} /> Reset
+              </Button>
+              <Button
+                variant="info"
+                onClick={() => setSettingsModal(true)}
+                className="w-100 mb-2"
+              >
+                <FontAwesomeIcon icon={faCog} /> Settings
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      <Modal show={settingsModal} onHide={() => setSettingsModal(false)}>
+        <Form onSubmit={handleSettingsChange}>
+          <Modal.Header closeButton>
+            <Modal.Title>Timer Settings</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group controlId="workTime" className="mb-3">
+              <Form.Label>Work Time (minutes)</Form.Label>
+              <Form.Control type="number" defaultValue={workTime} />
+            </Form.Group>
+            <Form.Group controlId="breakTime" className="mb-3">
+              <Form.Label>Break Time (minutes)</Form.Label>
+              <Form.Control type="number" defaultValue={breakTime} />
+            </Form.Group>
+            <Form.Group controlId="checkInTime" className="mb-3">
+              <Form.Label>Check-In Time (minutes)</Form.Label>
+              <Form.Control type="number" defaultValue={checkInTime / 60} />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setSettingsModal(false)}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{isBreak ? "BREAK" : "CHECK-IN"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {isBreak ? "It's time for a break!" : "How are you doing?"}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => setShowModal(false)}>
+            Continue
+          </Button>
+          <Button variant="info" onClick={navigateToBreathingExercises}>
+            <FontAwesomeIcon icon={faCheck} /> Go to Breathing Exercises
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 }
 

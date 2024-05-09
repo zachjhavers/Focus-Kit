@@ -4,6 +4,7 @@ import Navbar from "./Components/NavBar";
 import PomodoroTimer from "./Components/Timer";
 import BreathingExercises from "./Components/Breathing";
 import Home from "./Components/Home";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   return (
