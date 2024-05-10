@@ -12,8 +12,11 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const BreathingExercises = () => {
-  const [duration] = useState(60);
-  const [isRunning, setIsRunning] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleSelect = (selectedIndex, e) => {
+    setActiveIndex(selectedIndex);
+  };
 
   return (
     <div className="container">
@@ -25,27 +28,16 @@ const BreathingExercises = () => {
           interval={null}
           nextIcon={<FontAwesomeIcon icon={faChevronRight} />}
           prevIcon={<FontAwesomeIcon icon={faChevronLeft} />}
+          onSelect={handleSelect}
         >
           <Carousel.Item>
-            <BoxBreathing
-              duration={duration}
-              isRunning={isRunning}
-              onExerciseEnd={() => setIsRunning(false)}
-            />
+            <BoxBreathing active={activeIndex === 0} />
           </Carousel.Item>
           <Carousel.Item>
-            <EqualBreathing
-              duration={duration}
-              isRunning={isRunning}
-              onExerciseEnd={() => setIsRunning(false)}
-            />
+            <EqualBreathing active={activeIndex === 1} />
           </Carousel.Item>
           <Carousel.Item>
-            <FourSevenEightBreathing
-              duration={duration}
-              isRunning={isRunning}
-              onExerciseEnd={() => setIsRunning(false)}
-            />
+            <FourSevenEightBreathing active={activeIndex === 2} />
           </Carousel.Item>
         </Carousel>
       </div>

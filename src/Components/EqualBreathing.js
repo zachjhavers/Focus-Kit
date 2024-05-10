@@ -6,7 +6,7 @@ import inhaleAudio from "../Assets/Breathe In.mp3";
 import exhaleAudio from "../Assets/Breathe Out.mp3";
 import Alarm from "../Assets/AlarmSound.mp3";
 
-const EqualBreathing = () => {
+const EqualBreathing = ({ active }) => {
   const [duration, setDuration] = useState(60);
   const [phase, setPhase] = useState("inhale");
   const [timer, setTimer] = useState(6);
@@ -16,6 +16,12 @@ const EqualBreathing = () => {
   const [totalCycles, setTotalCycles] = useState(0);
 
   const BREATHING_PHASE_DURATION = 6;
+
+  useEffect(() => {
+    if (!active) {
+      stopTimer();
+    }
+  }, [active]);
 
   useEffect(() => {
     setTotalCycles(Math.floor(duration / (BREATHING_PHASE_DURATION * 2)));

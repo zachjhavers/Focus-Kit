@@ -7,7 +7,7 @@ import holdAudio from "../Assets/Hold.mp3";
 import exhaleAudio from "../Assets/Breathe Out.mp3";
 import Alarm from "../Assets/AlarmSound.mp3";
 
-const FourSevenEightBreathing = () => {
+const FourSevenEightBreathing = ({ active }) => {
   const [duration, setDuration] = useState(60);
   const [phase, setPhase] = useState("inhale");
   const [timer, setTimer] = useState(4);
@@ -15,6 +15,12 @@ const FourSevenEightBreathing = () => {
   const interval = useRef(null);
   const [currentCycle, setCurrentCycle] = useState(1);
   const [totalCycles, setTotalCycles] = useState(0);
+
+  useEffect(() => {
+    if (!active) {
+      stopTimer();
+    }
+  }, [active]);
 
   useEffect(() => {
     setTotalCycles(Math.floor(duration / 19));
