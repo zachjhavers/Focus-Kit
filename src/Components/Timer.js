@@ -21,6 +21,7 @@ import {
   faCog,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet";
 
 function Timer() {
   const [time, setTime] = useState(25 * 60);
@@ -101,6 +102,24 @@ function Timer() {
 
   return (
     <Container className="mt-5">
+      <Helmet>
+        <title>Pomodoro Timer - Focus Kit</title>
+        <meta
+          name="description"
+          content="Enhance your productivity with our Pomodoro Timer. Customize your work and break periods to optimize focus and efficiency."
+        />
+        <meta property="og:title" content="Pomodoro Timer - Focus Kit" />
+        <meta
+          property="og:description"
+          content="Use our Pomodoro Timer to manage your work sessions effectively and increase your productivity."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={Graphic} />
+        <meta
+          property="og:url"
+          content="https://www.focuskit.ca/pomodoro-timer"
+        />
+      </Helmet>
       <Row className="justify-content-center">
         <Col md={6}>
           <Image
