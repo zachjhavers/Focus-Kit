@@ -21,9 +21,9 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/pomodoro-timer">Pomodoro</Nav.Link>
-            <Nav.Link href="/breathing-exercises">Breathing</Nav.Link>
-            <Nav.Link href="/one-minute-workout">1 Minute Workout</Nav.Link>
+            <Nav.Link href="/pomodoro">Pomodoro</Nav.Link>
+            <Nav.Link href="/breathing">Breathing</Nav.Link>
+            <Nav.Link href="/workout">Workout</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

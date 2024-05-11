@@ -90,7 +90,7 @@ function WorkoutGenerator() {
             className="text-center"
             style={{ width: "100%", aspectRatio: "1" }}
           >
-            <Card.Header as="h4">One Minute Workout Timer</Card.Header>
+            <Card.Header as="h4">One Minute Workout</Card.Header>
             <Card.Body>
               <img
                 src={exercises[activeExerciseIndex].src}
