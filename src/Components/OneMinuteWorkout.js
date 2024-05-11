@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Helmet } from "react";
+import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { Button, Card, Container, Row, Col, Image } from "react-bootstrap";
 import PushUps from "../Assets/Pushups.png";
 import Plank from "../Assets/Plank.png";
