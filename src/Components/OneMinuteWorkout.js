@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Helmet } from "react";
 import { Button, Card, Container, Row, Col, Image } from "react-bootstrap";
 import PushUps from "../Assets/Pushups.png";
 import Plank from "../Assets/Plank.png";
@@ -72,7 +72,7 @@ function WorkoutGenerator() {
           content="Stay fit with our One-Minute Workout. Perfect for a quick exercise break to refresh your mind and body."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content={WorkoutGraphic} />
+        <meta property="og:image" content={Graphic} />
         <meta
           property="og:url"
           content="https://www.focuskit.ca/one-minute-workout"
