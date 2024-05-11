@@ -60,6 +60,24 @@ function WorkoutGenerator() {
 
   return (
     <Container className="mt-5">
+      <Helmet>
+        <title>One-Minute Workout - Focus Kit</title>
+        <meta
+          name="description"
+          content="Get a quick and effective workout with our One-Minute Workout. Ideal for busy schedules or a fast fitness boost."
+        />
+        <meta property="og:title" content="One-Minute Workout - Focus Kit" />
+        <meta
+          property="og:description"
+          content="Stay fit with our One-Minute Workout. Perfect for a quick exercise break to refresh your mind and body."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={WorkoutGraphic} />
+        <meta
+          property="og:url"
+          content="https://www.focuskit.ca/one-minute-workout"
+        />
+      </Helmet>
       <Row className="justify-content-center">
         <Col md={6}>
           <Image
