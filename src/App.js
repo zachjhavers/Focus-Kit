@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/NavBar";
 import PomodoroTimer from "./Components/Timer";
 import BreathingExercises from "./Components/Breathing";
-import Home from "./Components/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
@@ -11,7 +10,7 @@ const App = () => {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<PomodoroTimer />} />
         <Route path="breathing-exercises" element={<BreathingExercises />} />
         <Route path="pomodoro-timer" element={<PomodoroTimer />} />
       </Routes>
