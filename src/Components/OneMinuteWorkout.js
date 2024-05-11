@@ -12,11 +12,11 @@ import alarmSound from "../Assets/AlarmSound.mp3";
 import Graphic from "../Assets/WorkoutGraphic.png";
 
 const exercises = [
-  { name: "Push-ups", duration: 60, src: PushUps },
-  { name: "Plank", duration: 60, src: Plank },
-  { name: "Squats", duration: 60, src: Squats },
-  { name: "Jumping Jacks", duration: 60, src: JumpingJacks },
-  { name: "Burpees", duration: 60, src: Burpees },
+  { name: "Push-ups", duration: 12, src: PushUps },
+  { name: "Plank", duration: 12, src: Plank },
+  { name: "Squats", duration: 12, src: Squats },
+  { name: "Jumping Jacks", duration: 12, src: JumpingJacks },
+  { name: "Burpees", duration: 12, src: Burpees },
 ];
 
 function WorkoutGenerator() {
@@ -39,6 +39,7 @@ function WorkoutGenerator() {
     } else if (timeLeft === 0 && activeExerciseIndex === exercises.length - 1) {
       playAlarmSound();
       setTimerActive(false);
+      resetWorkout();
     } else {
       clearInterval(interval);
     }
@@ -63,14 +64,14 @@ function WorkoutGenerator() {
         <Col md={6}>
           <Image
             src={Graphic}
-            alt="Pomodoro Timer"
+            alt="Workout Graphic"
             className="img-fluid mb-3"
           />
           <Card
             className="text-center"
             style={{ width: "100%", aspectRatio: "1" }}
           >
-            <Card.Header as="h4">Workout Timer</Card.Header>
+            <Card.Header as="h4">One Minute Workout Timer</Card.Header>
             <Card.Body>
               <img
                 src={exercises[activeExerciseIndex].src}
